@@ -36,23 +36,31 @@ function timelyFun(){
 	gameOver=1;
 	for (i = 0; i < 9; i++){
 		for (j = 0; j < 9; j++){
-			if (quiz[id[i]][j]!=correctAnswer[id[i]][j]){
+			if (document.getElementById(id[i]+(j+1)).value!=correctAnswer[id[i]][j]){
 				gameOver=0;
 			};
 		};
 	};
 	if (gameOver==1){
 		document.getElementById('gameOver').style.display='block';
-		document.getElementById('cover').style.display='block';
 		document.getElementById('answerSheet').style.display='none';
 	};
 }
 function funcTest(){
     window.setInterval("timelyFun()",1000);
 }
+function preStart(){
+	if (document.getElementById('start').value=='開始'){
+		document.getElementById('start').value='確認開始?';
+		document.getElementById('start').style.background='#FFAAD5';
+	}else{
+		document.getElementById('start').value='開始';
+		document.getElementById('start').style.background='#4a90e2';
+		start();
+	};
+}
 function start(){
 	document.getElementById('gameOver').style.display='none';
-	document.getElementById('cover').style.display='none';
 	document.getElementById('answerSheet').style.display='block';
 	quiz=quizSheet[document.getElementById('quizSheet').value];
 	correctAnswer=answerSheet[document.getElementById('quizSheet').value];
@@ -63,7 +71,7 @@ function start(){
 		for (j = 0; j < id.length; j++){
 			document.getElementById(id[j]+i).style.background='white';
 			document.getElementById(id[j]+i).style.fontWeight='';
-			document.getElementById(id[j]+i).style.color='black';
+			document.getElementById(id[j]+i).style.color='black';;
 			document.getElementById(id[j]+i).value=quiz[id[j]][i-1];
 			if (quiz[id[j]][i-1]==0){
 				document.getElementById(id[j]+i).value=' ';
@@ -122,15 +130,17 @@ function keyBoard(n){
 		if (n!=' '){
 			n=Number(n);
 			document.getElementById(index).value=n;
-			quiz[index1][index2-1]=n;
+			//quiz[index1][index2-1]=n;
 			document.getElementById(index).style.color='#4b91e2';
 			for (i = 1; i < 10; i++){
 				for (j = 0; j < id.length; j++){
 					if (document.getElementById(id[j]+i).value==n){	
 						if (document.getElementById(id[j]+i).style.background=='rgb(226, 231, 237)'){
 							document.getElementById(index).style.color='red';
+							document.getElementById(id[j]+i).style.background='#FFAAD5';
+						}else{
+							document.getElementById(id[j]+i).style.background='#00CACA';
 						};
-						document.getElementById(id[j]+i).style.background='#00CACA';
 					};
 				};
 			};				
@@ -156,7 +166,9 @@ function hint(mn){
   <body onload=''>
 <div class='bg'>
 
-<div id='cover' style='display: none;width: 440px;height: 453px;float: left;'></div>
+<div id='gameOver' class='gameOver'>
+	<img class='gameOver' src='gameover.png'>
+</div>
 
 <table id='answerSheet' class='answerSheet' cellspacing="0" cellpadding="0">
 <tr>
@@ -294,15 +306,16 @@ function hint(mn){
 
 <form>
 <select id='quizSheet' class='quizSheet'>
-　<option value="0">試卷01</option>
-　<option value="1">試卷02</option>
-　<option value="2">試卷03</option>
-　<option value="3">試卷04</option>
+	<option value="4">測試用</option>
+	<option value="0">試卷01</option>
+	<option value="1">試卷02</option>
+	<option value="2">試卷03</option>
+	<option value="3">試卷04</option>
 </select>
 </form>
 
 
-<input id='start' class='start'type=button value='開始'onclick='start()'>
+<input id='start' class='start'type=button value='開始'onclick='preStart()'>
 
 
 <div class='keyBoard'>
@@ -331,8 +344,6 @@ function hint(mn){
 <input id='hint3' class='hint'type=button value='提示三' onclick='hint(3)'>
 </div>
 
-
-<div id='gameOver' class='gameOver'>成功!!</div>
 </div>
 	
   </body>

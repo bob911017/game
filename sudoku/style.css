@@ -63,9 +63,13 @@ input.hint{
 	height: 30px;
 }
 div.gameOver{
-	width: 700px;
-    padding-top: 20px;
-    font-size: 71px;
+    width: 440px;
+	height: 453px;
+	float: left;
     text-align: center;
     display: none;
+}
+img.gameOver{
+    width: 400px;
+    margin: 85px 0 0 5px;
 }
