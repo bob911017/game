@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'/>
+    <title>數獨</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="quizSheet.js"></script>
+	<script src="answerSheet.js"></script>
+	<script>
+var index,index1,index2;
+var connect ={
+	1:[1,2,3,1,4,7],
+	2:[1,2,3,2,5,8],
+	3:[1,2,3,3,6,9],
+	4:[4,5,6,1,4,7],
+	5:[4,5,6,2,5,8],
+	6:[4,5,6,3,6,9],
+	7:[7,8,9,1,4,7],
+	8:[7,8,9,2,5,8],
+	9:[7,8,9,3,6,9],
+	a:['a','b','c','d','g'],
+	b:['a','b','c','e','h'],
+	c:['a','b','c','f','i'],
+	d:['d','e','f','a','g'],
+	e:['d','e','f','b','h'],
+	f:['d','e','f','c','i'],
+	g:['g','h','i','a','d'],
+	h:['g','h','i','b','e'],
+	i:['g','h','i','c','f']
+}
+var i,j,id;
+id=['a','b','c','d','e','f','g','h','i'];
+var quiz,correctAnswer,oldColor;
+var gameOver=0;
+function timelyFun(){
+	gameOver=1;
+	for (i = 0; i < 9; i++){
+		for (j = 0; j < 9; j++){
+			if (quiz[id[i]][j]!=correctAnswer[id[i]][j]){
+				gameOver=0;
+			};
+		};
+	};
+	if (gameOver==1){
+		document.getElementById('gameOver').style.display='block';
+		document.getElementById('cover').style.display='block';
+		document.getElementById('answerSheet').style.display='none';
+	};
+}
+function funcTest(){
+    window.setInterval("timelyFun()",1000);
+}
+function start(){
+	document.getElementById('gameOver').style.display='none';
+	document.getElementById('cover').style.display='none';
+	document.getElementById('answerSheet').style.display='block';
+	quiz=quizSheet[document.getElementById('quizSheet').value];
+	correctAnswer=answerSheet[document.getElementById('quizSheet').value];
+	document.getElementById('hint1').style.background='';
+	document.getElementById('hint2').style.background='';
+	document.getElementById('hint3').style.background='';
+	for (i = 1; i < 10; i++){
+		for (j = 0; j < id.length; j++){
+			document.getElementById(id[j]+i).style.background='white';
+			document.getElementById(id[j]+i).style.fontWeight='';
+			document.getElementById(id[j]+i).style.color='black';
+			document.getElementById(id[j]+i).value=quiz[id[j]][i-1];
+			if (quiz[id[j]][i-1]==0){
+				document.getElementById(id[j]+i).value=' ';
+			}else{
+				document.getElementById(id[j]+i).style.fontWeight="bold";
+			};
+		};
+	};
+	funcTest();
+}
+function touch(m){
+	oldColor=document.getElementById(m).style.background;
+	document.getElementById(m).style.background='#cbdbed';
+}
+function untouch(m){
+		document.getElementById(m).style.background=oldColor;
+}
+function ktouch(m){
+	document.getElementById(m).style.background='#cbdbed';
+}
+function kuntouch(m){
+	document.getElementById(m).style.background='white';
+}
+function answer(n){
+	index=n;
+	index1=n.split("")[0];
+	index2=n.split("")[1];
+	//console.log(1);
+	for (i = 1; i < 10; i++){
+		for (j = 0; j < id.length; j++){
+			document.getElementById(id[j]+i).style.background='#ffffff';
+		};
+	};	
+	for (i = 1; i < 10; i++){
+		document.getElementById(index1+i).style.background='#e2e7ed';
+	};	
+	var neighbor;
+	for (i = 0; i < 3; i++){
+		for ( j= 0; j < 3; j++){
+			neighbor=connect[index1][i]+connect[index2][j];
+			document.getElementById(neighbor).style.background='#e2e7ed';
+		};
+	};
+	for (i = 3; i < 5; i++){
+		for ( j= 3; j < 6; j++){
+			neighbor=connect[index1][i]+connect[index2][j];
+			document.getElementById(neighbor).style.background='#e2e7ed';
+		};
+	};
+	oldColor='#bbdefb';
+}
+function keyBoard(n){
+	answer(index);
+	document.getElementById(index).style.background='#bbdefb';
+	if (document.getElementById(index).style.fontWeight!="bold"){
+		if (n!=' '){
+			n=Number(n);
+			document.getElementById(index).value=n;
+			quiz[index1][index2-1]=n;
+			document.getElementById(index).style.color='#4b91e2';
+			for (i = 1; i < 10; i++){
+				for (j = 0; j < id.length; j++){
+					if (document.getElementById(id[j]+i).value==n){	
+						if (document.getElementById(id[j]+i).style.background=='rgb(226, 231, 237)'){
+							document.getElementById(index).style.color='red';
+						};
+						document.getElementById(id[j]+i).style.background='#00CACA';
+					};
+				};
+			};				
+			document.getElementById(index).style.background='#e2e7ed';
+		}else{
+			document.getElementById(index).value=n;
+		};		
+	};
+}
+function hint(mn){
+	if (document.getElementById('hint'+mn).style.background!='rgb(60, 60, 60)'){
+		if (document.getElementById(index).style.fontWeight!="bold"){
+			document.getElementById('hint'+mn).style.background='#3c3c3c';
+			document.getElementById(index).value=correctAnswer[index1][index2-1];
+			document.getElementById(index).style.fontWeight="bold";	
+			document.getElementById(index).style.color='black';
+		};
+	};
+}
+	</script>
+
+  </head>
+  <body onload=''>
+<div class='bg'>
+
+<div id='cover' style='display: none;width: 440px;height: 453px;float: left;'></div>
+
+<table id='answerSheet' class='answerSheet' cellspacing="0" cellpadding="0">
+<tr>
+<td class='bigBlock'>
+<input id='a1' class='block'type=button value=' ' onclick='answer("a1")' onmouseover='touch("a1")' onmouseleave='untouch("a1")'>
+<input id='a2' class='block'type=button value=' ' onclick='answer("a2")' onmouseover='touch("a2")' onmouseleave='untouch("a2")'>
+<input id='a3' class='block'type=button value=' ' onclick='answer("a3")' onmouseover='touch("a3")' onmouseleave='untouch("a3")'>
+<div>
+<input id='a4' class='block'type=button value=' ' onclick='answer("a4")' onmouseover='touch("a4")' onmouseleave='untouch("a4")'>
+<input id='a5' class='block'type=button value=' ' onclick='answer("a5")' onmouseover='touch("a5")' onmouseleave='untouch("a5")'>
+<input id='a6' class='block'type=button value=' ' onclick='answer("a6")' onmouseover='touch("a6")' onmouseleave='untouch("a6")'>
+</div>
+<input id='a7' class='block'type=button value=' ' onclick='answer("a7")' onmouseover='touch("a7")' onmouseleave='untouch("a7")'>
+<input id='a8' class='block'type=button value=' ' onclick='answer("a8")' onmouseover='touch("a8")' onmouseleave='untouch("a8")'>
+<input id='a9' class='block'type=button value=' ' onclick='answer("a9")' onmouseover='touch("a9")' onmouseleave='untouch("a9")'>
+</td>
+
+<td class='bigBlock'>
+<input id='b1' class='block'type=button value=' ' onclick='answer("b1")' onmouseover='touch("b1")' onmouseleave='untouch("b1")'>
+<input id='b2' class='block'type=button value=' ' onclick='answer("b2")' onmouseover='touch("b2")' onmouseleave='untouch("b2")'>
+<input id='b3' class='block'type=button value=' ' onclick='answer("b3")' onmouseover='touch("b3")' onmouseleave='untouch("b3")'>
+<div>
+<input id='b4' class='block'type=button value=' ' onclick='answer("b4")' onmouseover='touch("b4")' onmouseleave='untouch("b4")'>
+<input id='b5' class='block'type=button value=' ' onclick='answer("b5")' onmouseover='touch("b5")' onmouseleave='untouch("b5")'>
+<input id='b6' class='block'type=button value=' ' onclick='answer("b6")' onmouseover='touch("b6")' onmouseleave='untouch("b6")'>
+</div>
+<input id='b7' class='block'type=button value=' ' onclick='answer("b7")' onmouseover='touch("b7")' onmouseleave='untouch("b7")'>
+<input id='b8' class='block'type=button value=' ' onclick='answer("b8")' onmouseover='touch("b8")' onmouseleave='untouch("b8")'>
+<input id='b9' class='block'type=button value=' ' onclick='answer("b9")' onmouseover='touch("b9")' onmouseleave='untouch("b9")'>
+</td>
+
+<td class='bigBlock'>
+<input id='c1' class='block'type=button value=' ' onclick='answer("c1")' onmouseover='touch("c1")' onmouseleave='untouch("c1")'>
+<input id='c2' class='block'type=button value=' ' onclick='answer("c2")' onmouseover='touch("c2")' onmouseleave='untouch("c2")'>
+<input id='c3' class='block'type=button value=' ' onclick='answer("c3")' onmouseover='touch("c3")' onmouseleave='untouch("c3")'>
+<div>
+<input id='c4' class='block'type=button value=' ' onclick='answer("c4")' onmouseover='touch("c4")' onmouseleave='untouch("c4")'>
+<input id='c5' class='block'type=button value=' ' onclick='answer("c5")' onmouseover='touch("c5")' onmouseleave='untouch("c5")'>
+<input id='c6' class='block'type=button value=' ' onclick='answer("c6")' onmouseover='touch("c6")' onmouseleave='untouch("c6")'>
+</div>
+<input id='c7' class='block'type=button value=' ' onclick='answer("c7")' onmouseover='touch("c7")' onmouseleave='untouch("c7")'>
+<input id='c8' class='block'type=button value=' ' onclick='answer("c8")' onmouseover='touch("c8")' onmouseleave='untouch("c8")'>
+<input id='c9' class='block'type=button value=' ' onclick='answer("c9")' onmouseover='touch("c9")' onmouseleave='untouch("c9")'>
+</td>
+
+<tr>
+<td class='bigBlock'>
+<input id='d1' class='block'type=button value=' ' onclick='answer("d1")' onmouseover='touch("d1")' onmouseleave='untouch("d1")'>
+<input id='d2' class='block'type=button value=' ' onclick='answer("d2")' onmouseover='touch("d2")' onmouseleave='untouch("d2")'>
+<input id='d3' class='block'type=button value=' ' onclick='answer("d3")' onmouseover='touch("d3")' onmouseleave='untouch("d3")'>
+<div>
+<input id='d4' class='block'type=button value=' ' onclick='answer("d4")' onmouseover='touch("d4")' onmouseleave='untouch("d4")'>
+<input id='d5' class='block'type=button value=' ' onclick='answer("d5")' onmouseover='touch("d5")' onmouseleave='untouch("d5")'>
+<input id='d6' class='block'type=button value=' ' onclick='answer("d6")' onmouseover='touch("d6")' onmouseleave='untouch("d6")'>
+</div>
+<input id='d7' class='block'type=button value=' ' onclick='answer("d7")' onmouseover='touch("d7")' onmouseleave='untouch("d7")'>
+<input id='d8' class='block'type=button value=' ' onclick='answer("d8")' onmouseover='touch("d8")' onmouseleave='untouch("d8")'>
+<input id='d9' class='block'type=button value=' ' onclick='answer("d9")' onmouseover='touch("d9")' onmouseleave='untouch("d9")'>
+</td>
+
+<td class='bigBlock'>
+<input id='e1' class='block'type=button value=' ' onclick='answer("e1")' onmouseover='touch("e1")' onmouseleave='untouch("e1")'>
+<input id='e2' class='block'type=button value=' ' onclick='answer("e2")' onmouseover='touch("e2")' onmouseleave='untouch("e2")'>
+<input id='e3' class='block'type=button value=' ' onclick='answer("e3")' onmouseover='touch("e3")' onmouseleave='untouch("e3")'>
+<div>
+<input id='e4' class='block'type=button value=' ' onclick='answer("e4")' onmouseover='touch("e4")' onmouseleave='untouch("e4")'>
+<input id='e5' class='block'type=button value=' ' onclick='answer("e5")' onmouseover='touch("e5")' onmouseleave='untouch("e5")'>
+<input id='e6' class='block'type=button value=' ' onclick='answer("e6")' onmouseover='touch("e6")' onmouseleave='untouch("e6")'>
+</div>
+<input id='e7' class='block'type=button value=' ' onclick='answer("e7")' onmouseover='touch("e7")' onmouseleave='untouch("e7")'>
+<input id='e8' class='block'type=button value=' ' onclick='answer("e8")' onmouseover='touch("e8")' onmouseleave='untouch("e8")'>
+<input id='e9' class='block'type=button value=' ' onclick='answer("e9")' onmouseover='touch("e9")' onmouseleave='untouch("e9")'>
+</td>
+
+<td class='bigBlock'>
+<input id='f1' class='block'type=button value=' ' onclick='answer("f1")' onmouseover='touch("f1")' onmouseleave='untouch("f1")'>
+<input id='f2' class='block'type=button value=' ' onclick='answer("f2")' onmouseover='touch("f2")' onmouseleave='untouch("f2")'>
+<input id='f3' class='block'type=button value=' ' onclick='answer("f3")' onmouseover='touch("f3")' onmouseleave='untouch("f3")'>
+<div>
+<input id='f4' class='block'type=button value=' ' onclick='answer("f4")' onmouseover='touch("f4")' onmouseleave='untouch("f4")'>
+<input id='f5' class='block'type=button value=' ' onclick='answer("f5")' onmouseover='touch("f5")' onmouseleave='untouch("f5")'>
+<input id='f6' class='block'type=button value=' ' onclick='answer("f6")' onmouseover='touch("f6")' onmouseleave='untouch("f6")'>
+</div>
+<input id='f7' class='block'type=button value=' ' onclick='answer("f7")' onmouseover='touch("f7")' onmouseleave='untouch("f7")'>
+<input id='f8' class='block'type=button value=' ' onclick='answer("f8")' onmouseover='touch("f8")' onmouseleave='untouch("f8")'>
+<input id='f9' class='block'type=button value=' ' onclick='answer("f9")' onmouseover='touch("f9")' onmouseleave='untouch("f9")'>
+</td>
+
+<tr>
+<td class='bigBlock'>
+<input id='g1' class='block'type=button value=' ' onclick='answer("g1")' onmouseover='touch("g1")' onmouseleave='untouch("g1")'>
+<input id='g2' class='block'type=button value=' ' onclick='answer("g2")' onmouseover='touch("g2")' onmouseleave='untouch("g2")'>
+<input id='g3' class='block'type=button value=' ' onclick='answer("g3")' onmouseover='touch("g3")' onmouseleave='untouch("g3")'>
+<div>
+<input id='g4' class='block'type=button value=' ' onclick='answer("g4")' onmouseover='touch("g4")' onmouseleave='untouch("g4")'>
+<input id='g5' class='block'type=button value=' ' onclick='answer("g5")' onmouseover='touch("g5")' onmouseleave='untouch("g5")'>
+<input id='g6' class='block'type=button value=' ' onclick='answer("g6")' onmouseover='touch("g6")' onmouseleave='untouch("g6")'>
+</div>
+<input id='g7' class='block'type=button value=' ' onclick='answer("g7")' onmouseover='touch("g7")' onmouseleave='untouch("g7")'>
+<input id='g8' class='block'type=button value=' ' onclick='answer("g8")' onmouseover='touch("g8")' onmouseleave='untouch("g8")'>
+<input id='g9' class='block'type=button value=' ' onclick='answer("g9")' onmouseover='touch("g9")' onmouseleave='untouch("g9")'>
+</td>
+
+<td class='bigBlock'>
+<input id='h1' class='block'type=button value=' ' onclick='answer("h1")' onmouseover='touch("h1")' onmouseleave='untouch("h1")'>
+<input id='h2' class='block'type=button value=' ' onclick='answer("h2")' onmouseover='touch("h2")' onmouseleave='untouch("h2")'>
+<input id='h3' class='block'type=button value=' ' onclick='answer("h3")' onmouseover='touch("h3")' onmouseleave='untouch("h3")'>
+<div>
+<input id='h4' class='block'type=button value=' ' onclick='answer("h4")' onmouseover='touch("h4")' onmouseleave='untouch("h4")'>
+<input id='h5' class='block'type=button value=' ' onclick='answer("h5")' onmouseover='touch("h5")' onmouseleave='untouch("h5")'>
+<input id='h6' class='block'type=button value=' ' onclick='answer("h6")' onmouseover='touch("h6")' onmouseleave='untouch("h6")'>
+</div>
+<input id='h7' class='block'type=button value=' ' onclick='answer("h7")' onmouseover='touch("h7")' onmouseleave='untouch("h7")'>
+<input id='h8' class='block'type=button value=' ' onclick='answer("h8")' onmouseover='touch("h8")' onmouseleave='untouch("h8")'>
+<input id='h9' class='block'type=button value=' ' onclick='answer("h9")' onmouseover='touch("h9")' onmouseleave='untouch("h9")'>
+</td>
+
+<td class='bigBlock'>
+<input id='i1' class='block'type=button value=' ' onclick='answer("i1")' onmouseover='touch("i1")' onmouseleave='untouch("i1")'>
+<input id='i2' class='block'type=button value=' ' onclick='answer("i2")' onmouseover='touch("i2")' onmouseleave='untouch("i2")'>
+<input id='i3' class='block'type=button value=' ' onclick='answer("i3")' onmouseover='touch("i3")' onmouseleave='untouch("i3")'>
+<div>
+<input id='i4' class='block'type=button value=' ' onclick='answer("i4")' onmouseover='touch("i4")' onmouseleave='untouch("i4")'>
+<input id='i5' class='block'type=button value=' ' onclick='answer("i5")' onmouseover='touch("i5")' onmouseleave='untouch("i5")'>
+<input id='i6' class='block'type=button value=' ' onclick='answer("i6")' onmouseover='touch("i6")' onmouseleave='untouch("i6")'>
+</div>
+<input id='i7' class='block'type=button value=' ' onclick='answer("i7")' onmouseover='touch("i7")' onmouseleave='untouch("i7")'>
+<input id='i8' class='block'type=button value=' ' onclick='answer("i8")' onmouseover='touch("i8")' onmouseleave='untouch("i8")'>
+<input id='i9' class='block'type=button value=' ' onclick='answer("i9")' onmouseover='touch("i9")' onmouseleave='untouch("i9")'>
+</td>
+
+</table>
+
+
+
+<form>
+<select id='quizSheet' class='quizSheet'>
+　<option value="0">試卷01</option>
+　<option value="1">試卷02</option>
+　<option value="2">試卷03</option>
+　<option value="3">試卷04</option>
+</select>
+</form>
+
+
+<input id='start' class='start'type=button value='開始'onclick='start()'>
+
+
+<div class='keyBoard'>
+<input id='j1' class='keyBoard'type=button value='1' onclick='keyBoard("1")' onmouseover='ktouch("j1")' onmouseleave='kuntouch("j1")'>
+<input id='j2' class='keyBoard'type=button value='2' onclick='keyBoard("2")' onmouseover='ktouch("j2")' onmouseleave='kuntouch("j2")'>
+<input id='j3' class='keyBoard'type=button value='3' onclick='keyBoard("3")' onmouseover='ktouch("j3")' onmouseleave='kuntouch("j3")'>
+<div>
+<input id='j4' class='keyBoard'type=button value='4' onclick='keyBoard("4")' onmouseover='ktouch("j4")' onmouseleave='kuntouch("j4")'>
+<input id='j5' class='keyBoard'type=button value='5' onclick='keyBoard("5")' onmouseover='ktouch("j5")' onmouseleave='kuntouch("j5")'>
+<input id='j6' class='keyBoard'type=button value='6' onclick='keyBoard("6")' onmouseover='ktouch("j6")' onmouseleave='kuntouch("j6")'>
+</div>
+<div>
+<input id='j7' class='keyBoard'type=button value='7' onclick='keyBoard("7")' onmouseover='ktouch("j7")' onmouseleave='kuntouch("j7")'>
+<input id='j8' class='keyBoard'type=button value='8' onclick='keyBoard("8")' onmouseover='ktouch("j8")' onmouseleave='kuntouch("j8")'>
+<input id='j9' class='keyBoard'type=button value='9' onclick='keyBoard("9")' onmouseover='ktouch("j9")' onmouseleave='kuntouch("j9")'>
+</div>
+<div style='width: 191px;text-align: center;'>
+<input id='j11' class='keyBoard'type=button value='✂' onclick='keyBoard(" ")' onmouseover='ktouch("j11")' onmouseleave='kuntouch("j11")'>
+</div>
+</div>
+
+
+<div class='hint'>
+<input id='hint1' class='hint'type=button value='提示一' onclick='hint(1)'>
+<input id='hint2' class='hint'type=button value='提示二' onclick='hint(2)'>
+<input id='hint3' class='hint'type=button value='提示三' onclick='hint(3)'>
+</div>
+
+
+<div id='gameOver' class='gameOver'>成功!!</div>
+</div>
+	
+  </body>
+</html>

@@ -1,0 +1,71 @@
+body{
+	background-color: #d2d7d3;
+}
+div.bg{
+	background: #fde3a7;
+	width: 700px;
+	height: 600px;
+	margin: 0 auto;
+}
+table.answerSheet{
+	float: left;
+	margin: 32px 32px 0 32px;
+}
+td.bigBlock{
+	border: black inset;
+	padding-left: 4px;
+}
+input.block{
+	width: 40px;
+	height: 40px;
+	font-size: 25px;
+	background: white;
+	border: solid black;
+    border-width: 0.1px;
+	margin-left: -4px;
+    cursor: pointer;	
+}
+div.keyBoard{
+	padding: 17px 0 0 460px;
+}
+input.keyBoard{
+	width: 65px;
+	height: 65px;
+	font-size: 30px;
+	background: white;
+	border: solid black;
+    border-width: 1px;
+	margin-left: -4px;
+    cursor: pointer;	
+}
+input.start{
+    margin: 5px 0 0 33px;
+    height: 60px;
+    width: 160px;
+    font-size: 27px;
+    background: #4a90e2;
+    font-weight: bold;
+    border-radius: 10px;
+	cursor: pointer;
+}
+input:hover.start{
+	background: #ACD6FF;
+}
+select.quizSheet{
+	margin: 30px 0 0 73px;
+    height: 30px;
+    width: 80px;
+}	
+div.hint{
+	padding: 20px 0 0 469px;
+}
+input.hint{
+	height: 30px;
+}
+div.gameOver{
+	width: 700px;
+    padding-top: 20px;
+    font-size: 71px;
+    text-align: center;
+    display: none;
+}
