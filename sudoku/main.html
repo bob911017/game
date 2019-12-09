@@ -121,6 +121,7 @@ function answer(n){
 			document.getElementById(neighbor).style.background='#e2e7ed';
 		};
 	};
+	document.getElementById(index).style.background='#bbdefb';
 	oldColor='#bbdefb';
 }
 function keyBoard(n){
@@ -130,7 +131,6 @@ function keyBoard(n){
 		if (n!=' '){
 			n=Number(n);
 			document.getElementById(index).value=n;
-			//quiz[index1][index2-1]=n;
 			document.getElementById(index).style.color='#4b91e2';
 			for (i = 1; i < 10; i++){
 				for (j = 0; j < id.length; j++){
@@ -144,7 +144,7 @@ function keyBoard(n){
 					};
 				};
 			};				
-			document.getElementById(index).style.background='#e2e7ed';
+			document.getElementById(index).style.background='#bbdefb';
 		}else{
 			document.getElementById(index).value=n;
 		};		
