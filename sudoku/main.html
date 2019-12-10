@@ -55,10 +55,10 @@ function funcTest(){
 function preStart(){
 	if (document.getElementById('start').value=='開始'){
 		document.getElementById('start').value='確認開始?';
-		document.getElementById('start').style.background='#FFAAD5';
+		document.getElementById('start').style.background='#cb2e1b';
 	}else{
 		document.getElementById('start').value='開始';
-		document.getElementById('start').style.background='#4a90e2';
+		document.getElementById('start').style.background='#003286';
 		start();
 	};
 }
@@ -73,9 +73,9 @@ function start(){
 	document.getElementById('answerSheet').style.display='block';
 	quiz=quizSheet[document.getElementById('quizSheet').value];
 	correctAnswer=answerSheet[document.getElementById('quizSheet').value];
-	document.getElementById('hint1').style.background='';
-	document.getElementById('hint2').style.background='';
-	document.getElementById('hint3').style.background='';
+	document.getElementById('hint1').style.background='#f4ef8e';
+	document.getElementById('hint2').style.background='#f4ef8e';
+	document.getElementById('hint3').style.background='#f4ef8e';
 	for (i = 1; i < 10; i++){
 		for (j = 0; j < id.length; j++){
 			document.getElementById(id[j]+i).style.background='white';
@@ -325,11 +325,13 @@ function recover(){
 
 <form>
 <select id='quizSheet' class='quizSheet'>
-	<option value="4">測試用</option>
-	<option value="0">試卷01</option>
-	<option value="1">試卷02</option>
-	<option value="2">試卷03</option>
-	<option value="3">試卷04</option>
+	<!--<option value="0">測試用</option>-->
+	<option value="1">問題01</option>
+	<option value="2">問題02</option>
+	<option value="3">問題03</option>
+	<option value="4">問題04</option>
+	<option value="5">問題05</option>
+	<option value="6">問題06</option>
 </select>
 </form>
 
@@ -364,6 +366,8 @@ function recover(){
 <input id='hint2' class='hint'type=button value='提示二' onclick='hint(2)'>
 <input id='hint3' class='hint'type=button value='提示三' onclick='hint(3)'>
 </div>
+
+
 
 </div>
 	
