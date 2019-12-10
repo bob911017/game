@@ -31,6 +31,9 @@ var connect ={
 var i,j,id;
 id=['a','b','c','d','e','f','g','h','i'];
 var quiz,correctAnswer,oldColor;
+var oldIndex1=[];
+var oldIndex2=[];
+var oldValue=[];
 var gameOver=0;
 function timelyFun(){
 	gameOver=1;
@@ -60,6 +63,12 @@ function preStart(){
 	};
 }
 function start(){
+	oldIndex1=[];
+	oldIndex2=[];
+	oldValue=[];
+	index=' ';
+	index1=' ';
+	index2=' ';
 	document.getElementById('gameOver').style.display='none';
 	document.getElementById('answerSheet').style.display='block';
 	quiz=quizSheet[document.getElementById('quizSheet').value];
@@ -99,7 +108,6 @@ function answer(n){
 	index=n;
 	index1=n.split("")[0];
 	index2=n.split("")[1];
-	//console.log(1);
 	for (i = 1; i < 10; i++){
 		for (j = 0; j < id.length; j++){
 			document.getElementById(id[j]+i).style.background='#ffffff';
@@ -125,6 +133,11 @@ function answer(n){
 	oldColor='#bbdefb';
 }
 function keyBoard(n){
+	if (document.getElementById(index).style.background=='rgb(187, 222, 251)'){
+		oldIndex1=oldIndex1+index1;
+		oldIndex2=oldIndex2+index2;
+		oldValue=oldValue+n;
+	};	
 	answer(index);
 	document.getElementById(index).style.background='#bbdefb';
 	if (document.getElementById(index).style.fontWeight!="bold"){
@@ -159,6 +172,12 @@ function hint(mn){
 			document.getElementById(index).style.color='black';
 		};
 	};
+}
+function recover(){
+	oldIndex1=oldIndex1.substring(0, oldIndex1.length-1);
+	oldIndex2=oldIndex2.substring(0, oldIndex2.length-1);
+	oldValue=oldValue.substring(0, oldValue.length-1);
+	document.getElementById(oldIndex1.slice(-1)+oldIndex2.slice(-1)).value=oldValue.slice(-1);
 }
 	</script>
 
@@ -332,8 +351,10 @@ function hint(mn){
 <input id='j8' class='keyBoard'type=button value='8' onclick='keyBoard("8")' onmouseover='ktouch("j8")' onmouseleave='kuntouch("j8")'>
 <input id='j9' class='keyBoard'type=button value='9' onclick='keyBoard("9")' onmouseover='ktouch("j9")' onmouseleave='kuntouch("j9")'>
 </div>
-<div style='width: 191px;text-align: center;'>
-<input id='j11' class='keyBoard'type=button value='✂' onclick='keyBoard(" ")' onmouseover='ktouch("j11")' onmouseleave='kuntouch("j11")'>
+<div style='margin-left:-4px'>
+<div id='j10' class='extraFun'onclick='recover()' onmouseover='ktouch("j10")' onmouseleave='kuntouch("j10")'>復原</div>
+<div id='j11' class='extraFun'onclick='keyBoard(" ")' onmouseover='ktouch("j11")' onmouseleave='kuntouch("j11")'>清除</div>
+<div id='j12' class='extraFun'onclick='keyBoard(" ")' onmouseover='ktouch("j12")' onmouseleave='kuntouch("j12")'> </div>
 </div>
 </div>
 

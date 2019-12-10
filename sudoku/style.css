@@ -38,6 +38,17 @@ input.keyBoard{
 	margin-left: -4px;
     cursor: pointer;	
 }
+div.extraFun{
+	background: white;
+    height: 63px;
+    width: 63px;
+    float: left;
+    border: 1px solid black;
+	font-size: 24px;
+	line-height: 63px;
+    text-align: center;
+	cursor: pointer;
+}
 input.start{
     margin: 5px 0 0 33px;
     height: 60px;
@@ -61,6 +72,7 @@ div.hint{
 }
 input.hint{
 	height: 30px;
+	margin-top: 10px;
 }
 div.gameOver{
     width: 440px;
