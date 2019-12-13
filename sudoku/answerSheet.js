@@ -76,4 +76,4 @@ h:[2,3,9,7,1,8,6,5,4],
 i:[5,8,4,6,9,2,3,1,7]
 };
 
-var answerSheet=[answer00,answer01,answer02,answer03,answer04,answer05];
+var answerSheet=[answer00,answer01,answer02,answer03,answer04,answer05,answer06];
