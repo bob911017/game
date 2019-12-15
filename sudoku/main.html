@@ -93,8 +93,13 @@ function start(){
 	document.getElementById('hint2').style.background='#f4ef8e';
 	document.getElementById('hint3').style.background='#f4ef8e';
 	document.getElementById('hintQuiz').style.display='none';
+	initialHint=0;
+	OldHint='old';
+	for (i=0;i<myHint.length;i++){
+		myHint[i]['isLegal']=1;
+	};
 	for(i=0;i<4;i++){
-				document.getElementById('hintA'+i).style.background='#005AB5';		
+		document.getElementById('hintA'+i).style.background='#005AB5';
 	};
 	for (i = 1; i < 10; i++){
 		for (j = 0; j < id.length; j++){

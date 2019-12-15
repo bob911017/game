@@ -1,5 +1,15 @@
 var hintAns,rand,hintFail;
+var initialHint=0;
+var OldHint='old';
 function hint(mn){
+	if (initialHint==1){
+		if (document.getElementById('hintQuiz').style.display=='none'||OldHint!=mn){
+			myHint[rand]['isLegal']=1;
+		};
+	}else{
+		initialHint=1;
+	};
+	oldHint=mn;
 	if (document.getElementById('hint'+mn).style.background!='rgb(60, 60, 60)'){
 		if (document.getElementById(index).style.fontWeight!="bold"){
 			hintFail='hint'+mn;
@@ -15,18 +25,22 @@ function hint(mn){
 	};
 }
 function getHint(n){
+	document.getElementById(hintFail).style.background='#3c3c3c';
 	if (n==hintAns&document.getElementById('hintA'+n).style.background!='green'){
-		document.getElementById(hintFail).style.background='#3c3c3c';
-		document.getElementById(index).value=correctAnswer[index1][index2-1];
-		document.getElementById(index).style.fontWeight="bold";	
-		document.getElementById(index).style.color='black';
+		if (myHint[rand]['isLegal']==1){
+			document.getElementById(index).value=correctAnswer[index1][index2-1];
+			document.getElementById(index).style.fontWeight="bold";	
+			document.getElementById(index).style.color='black';
+		};
 		document.getElementById('hintA'+n).style.background='green';
 	};
 	if (n!=hintAns){
 		document.getElementById('hintA'+n).style.background='red';
+		myHint[rand]['isLegal']=0;
 	};
 }
 var myHintQ0={
+	isLegal:1,
 	q:'1+1=?',
 	a0:'2',
 	a1:'10',
@@ -35,6 +49,7 @@ var myHintQ0={
 	CorrectAns:0
 }
 var myHintQ1={
+	isLegal:1,
 	q:'一星期有幾天?',
 	a0:'不知道',
 	a1:'7天',
