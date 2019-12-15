@@ -7,7 +7,7 @@ div.bg{
 	background-position: center;
 	background-size: cover;
 	width: 700px;
-	height: 640px;
+	height: 685px;
 	margin: 0 auto;
 }
 table.answerSheet{
@@ -96,4 +96,32 @@ img.btm{
 	width: 700px;
     height: 105px;
     margin-top: 62px;
+}
+
+div.hintQuiz{
+	width: 600px;
+    height: 170px;
+    background: #4F4F4F;
+    margin: 15px 0 0 45px;
+    border-radius: 30px;
+    border: #272727 outset 5px;
+    text-align: center;
+	display: none;
+}
+div.hintQue{
+	height: 30px;
+	color: white;
+    font-weight: bold;
+	font-size: 20px;
+    margin: 8px;
+}
+input.hintAns{
+	width: 280px;
+    height: 50px;
+    margin: 5px;
+	background: #005AB5;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+	border-radius: 10px;
 }
